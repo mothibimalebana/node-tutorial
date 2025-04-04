@@ -1,11 +1,15 @@
-import {createServer} from 'http'
+import {createServer} from 'http';
+import url from 'url';
 
 const server = createServer((req, res) => {
     res.writeHead(200, {'content-type': 'text/html'});
-    res.write(req.url);
-    res.end();
-})
+    
+    const q = url.parse(req.url, true);
+    const currentPage = q.pathname
 
-server.listen(3300, '127.0.0.1', () => {
-    console.log(`Server is running`)
+    res.write(`${q.pathname}`);
+
+    res.end();
+}).listen(8080, () => {
+    console.log('Server is listening')
 })
